@@ -19,4 +19,8 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun clearTextSource()
+
+    fun setTargetLanguageEmpty()
+
+    fun setSourceLanguageEmpty()
 }

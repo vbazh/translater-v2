@@ -20,7 +20,10 @@ class HistoryPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        getHistory()
+    }
 
+    private fun getHistory() {
         compositeDisposable.add(
             historyInteractor.observeHistory()
                 .subscribeOn(Schedulers.io())
@@ -36,11 +39,28 @@ class HistoryPresenter @Inject constructor(
             historyInteractor.delete(translateEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.successDelete() }, { viewState.failedDelete() })
+                .subscribe(
+                    { viewState.successDelete() },
+                    { viewState.failedDelete() })
         )
     }
 
     fun navigateBack() {
         router.exit()
+    }
+
+    fun search(text: String) {
+
+        if (text.isEmpty()) {
+            getHistory()
+            return
+        }
+
+        compositeDisposable.add(
+            historyInteractor.search(text)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ viewState.setItems(it) }, {})
+        )
     }
 }

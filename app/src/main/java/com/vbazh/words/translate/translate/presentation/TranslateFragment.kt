@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.vbazh.words.R
 import com.vbazh.words.di.ComponentManager
 import kotlinx.android.synthetic.main.fragment_translate.*
+import kotlinx.android.synthetic.main.fragment_translate.sourceText
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -94,5 +95,13 @@ class TranslateFragment : MvpAppCompatFragment(), TranslateView {
 
     override fun showErrorPickLanguage() {
         Toast.makeText(context, R.string.translate_pick_language_error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setTargetLanguageEmpty() {
+        targetLanguage.text = getString(R.string.translate_empty_language)
+    }
+
+    override fun setSourceLanguageEmpty() {
+        sourceLanguage.text = getString(R.string.translate_empty_language)
     }
 }

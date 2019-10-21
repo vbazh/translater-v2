@@ -26,14 +26,26 @@ class TranslatePresenter @Inject constructor(
             translateInteractor.getSourceLanguage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.setSourceLanguageText(it.name) }, {})
+                .subscribe({ defaultSource ->
+                    if (defaultSource.id.isEmpty()) {
+                        viewState.setSourceLanguageEmpty()
+                    } else {
+                        viewState.setSourceLanguageText(defaultSource.name)
+                    }
+                }, {})
         )
 
         compositeDisposable.add(
             translateInteractor.getTargetLanguage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.setTargetLanguageText(it.name) }, {})
+                .subscribe({ defaultTarget ->
+                    if (defaultTarget.id.isEmpty()) {
+                        viewState.setTargetLanguageEmpty()
+                    } else {
+                        viewState.setTargetLanguageText(defaultTarget.name)
+                    }
+                }, {})
         )
     }
 
@@ -46,7 +58,6 @@ class TranslatePresenter @Inject constructor(
     }
 
     fun translate(text: String) {
-
         if (text.isEmpty()) {
             viewState.clearTextSource()
             return

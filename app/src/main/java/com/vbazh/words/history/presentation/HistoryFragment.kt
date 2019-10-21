@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +18,6 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 class HistoryFragment : MvpAppCompatFragment(), HistoryView {
-    override fun successDelete() {
-        Toast.makeText(context, R.string.history_delete_success, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun failedDelete() {
-        Toast.makeText(context, R.string.history_delete_failed, Toast.LENGTH_SHORT).show()
-    }
 
     private val layoutResId = R.layout.fragment_history
 
@@ -71,6 +65,22 @@ class HistoryFragment : MvpAppCompatFragment(), HistoryView {
         historyToolbar.setNavigationOnClickListener {
             presenter.navigateBack()
         }
+
+        textSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                presenter.search(textSearch.text.toString())
+                true
+            }
+            false
+        }
+    }
+
+    override fun successDelete() {
+        Toast.makeText(context, R.string.history_delete_success, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun failedDelete() {
+        Toast.makeText(context, R.string.history_delete_failed, Toast.LENGTH_SHORT).show()
     }
 
     override fun setItems(translate: List<TranslateEntity>) {

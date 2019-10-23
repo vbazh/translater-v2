@@ -3,10 +3,14 @@
     <string name="translate_enter_text_hint">Enter text for translate…</string>
     <string name="translate_pick_language_error">Pick language error!</string>
     <string name="translate_button">Translate!</string>
-    <string name="translate_history">History!</string>
+    <string name="history_title">History!</string>
     <string name="history_delete_success">Success delete</string>
     <string name="history_delete_failed">Failed delete</string>
     <string name="pick_language_title">Pick Language!</string>
     <string name="history_hint_search">Search from history</string>
+    <string name="favorite_hint_search">Search from favorite</string>
     <string name="translate_empty_language">Pick Language</string>
+    <string name="favorite_title">Favorite!</string>
+    <string name="favorite_delete_success">Success delete</string>
+    <string name="favorite_delete_failed">Failed delete</string>
 </resources>

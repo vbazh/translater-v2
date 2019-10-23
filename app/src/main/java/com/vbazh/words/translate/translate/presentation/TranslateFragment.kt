@@ -67,10 +67,13 @@ class TranslateFragment : MvpAppCompatFragment(), TranslateView {
             presenter.navigateToHistory()
         }
 
-        sourceText.setOnEditorActionListener { v, actionId, event ->
+        favoriteButton.setOnClickListener {
+            presenter.navigateToFavorite()
+        }
+
+        sourceText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 presenter.translate(sourceText.text.toString())
-                true
             }
             false
         }

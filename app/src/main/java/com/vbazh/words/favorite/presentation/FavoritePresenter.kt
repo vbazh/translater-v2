@@ -1,4 +1,4 @@
-package com.vbazh.words.history.presentation
+package com.vbazh.words.favorite.presentation
 
 import com.vbazh.words.data.local.entity.TranslateEntity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,48 +10,33 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
-class HistoryPresenter @Inject constructor(
-    private val historyInteractor: IHistoryInteractor,
+class FavoritePresenter @Inject constructor(
+    private val favoriteInteractor: IFavoriteInteractor,
     private val router: Router
-) :
-    MvpPresenter<HistoryView>() {
+) : MvpPresenter<FavoriteView>() {
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        getHistory()
+        getFavorite()
     }
 
-    private fun getHistory() {
+    private fun getFavorite() {
         compositeDisposable.add(
-            historyInteractor.observeHistory()
+            favoriteInteractor.observeFavorite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { viewState.setItems(it) },
-                    { })
+                .subscribe({ viewState.setItems(it) }, {})
         )
     }
 
-    fun deleteTranslate(translateEntity: TranslateEntity) {
+    fun removeFromFavorite(translateEntity: TranslateEntity) {
         compositeDisposable.add(
-            historyInteractor.delete(translateEntity)
+            favoriteInteractor.removeFromFavorite(translateEntity)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { viewState.successDelete() },
-                    { viewState.failedDelete() })
-        )
-    }
-
-    fun favoriteTranslate(translateEntity: TranslateEntity) {
-        compositeDisposable.add(
-            historyInteractor.favorite(translateEntity)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { },
                     { viewState.failedDelete() })
         )
     }
@@ -62,12 +47,12 @@ class HistoryPresenter @Inject constructor(
 
     fun search(text: String) {
         if (text.isEmpty()) {
-            getHistory()
+            getFavorite()
             return
         }
 
         compositeDisposable.add(
-            historyInteractor.search(text)
+            favoriteInteractor.search(text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ viewState.setItems(it) }, {})

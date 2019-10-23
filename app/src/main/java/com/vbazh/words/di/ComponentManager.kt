@@ -28,6 +28,8 @@ class ComponentManagerImpl {
 
     val historyComponent = Component { getAppComponent().historyComponentBuilder().build() }
 
+    val favoriteComponent = Component { getAppComponent().favoriteComponentBuilder().build() }
+
     fun getAppComponent() = appComponent
 
     class Component<T>(private val builder: () -> T) {

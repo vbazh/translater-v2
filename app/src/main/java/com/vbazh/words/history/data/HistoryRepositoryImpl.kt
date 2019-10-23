@@ -25,4 +25,8 @@ class HistoryRepositoryImpl @Inject constructor(
     override fun search(text: String): Single<List<TranslateEntity>> {
         return database.translateDao().findByText(text)
     }
+
+    override fun favorite(entity: TranslateEntity): Completable {
+        return database.translateDao().update(entity)
+    }
 }

@@ -75,4 +75,8 @@ class TranslatePresenter @Inject constructor(
     fun navigateToHistory() {
         router.navigateTo(Screens.History)
     }
+
+    fun navigateToFavorite() {
+        router.navigateTo(Screens.Favorite)
+    }
 }

@@ -79,7 +79,15 @@
         android:id="@+id/historyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/translate_history"
+        android:text="@string/history_title"
         app:layout_constraintTop_toBottomOf="@id/translateButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favorite_title"
+        app:layout_constraintTop_toBottomOf="@id/historyButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

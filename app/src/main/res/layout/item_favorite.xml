@@ -16,7 +16,7 @@
             android:id="@+id/sourceText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/favorite"
+            android:layout_toStartOf="@id/delete"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="Hello!" />
@@ -27,19 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/sourceText"
             android:layout_marginTop="6dp"
-            android:layout_toStartOf="@id/favorite"
+            android:layout_toStartOf="@id/delete"
             android:textSize="16sp"
             tools:text="Здравствуйте" />
-
-        <ImageView
-            android:id="@+id/favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/delete"
-            android:background="?attr/selectableItemBackground"
-            android:padding="12dp"
-            android:src="@drawable/ic_star_border_black_24dp" />
 
         <ImageView
             android:id="@+id/delete"

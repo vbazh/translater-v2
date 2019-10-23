@@ -11,5 +11,7 @@ interface IHistoryInteractor {
 
     fun delete(translateEntity: TranslateEntity): Completable
 
+    fun favorite(translateEntity: TranslateEntity): Completable
+
     fun search(text: String) : Single<List<TranslateEntity>>
 }

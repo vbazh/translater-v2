@@ -21,5 +21,8 @@ data class TranslateEntity(
     var target: String,
 
     @ColumnInfo(name = DataConsts.DB_TRANSLATE_DIRECTION_FIELD)
-    var direction: String
+    var direction: String,
+
+    @ColumnInfo(name = DataConsts.DB_TRANSLATE_FAVORITE_FIELD)
+    var isFavorite: Int
 )

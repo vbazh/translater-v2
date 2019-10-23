@@ -21,4 +21,8 @@ class HistoryInteractorImpl @Inject constructor(private val historyRepository: I
     override fun search(text: String): Single<List<TranslateEntity>> {
         return historyRepository.search(text)
     }
+
+    override fun favorite(translateEntity: TranslateEntity): Completable {
+        return historyRepository.favorite(translateEntity)
+    }
 }

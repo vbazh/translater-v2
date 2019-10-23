@@ -6,29 +6,29 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/historyToolbar"
+        android:id="@+id/favoriteToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:title="@string/history_title" />
+        app:title="@string/favorite_title" />
 
     <EditText
         android:id="@+id/textSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/history_hint_search"
+        android:hint="@string/favorite_hint_search"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/historyToolbar" />
+        app:layout_constraintTop_toBottomOf="@id/favoriteToolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyRecycler"
+        android:id="@+id/favoriteRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"

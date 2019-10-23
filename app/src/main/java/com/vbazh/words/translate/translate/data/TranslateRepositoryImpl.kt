@@ -46,7 +46,8 @@ class TranslateRepositoryImpl @Inject constructor(
                 TranslateEntity(
                     target = translateResponse.text[0],
                     direction = translateResponse.lang,
-                    source = text
+                    source = text,
+                    isFavorite = 0
                 )
             }
             .doAfterSuccess { translateResponse ->

@@ -1,5 +1,6 @@
 package com.vbazh.words.navigation
 
+import com.vbazh.words.favorite.presentation.FavoriteFragment
 import com.vbazh.words.history.presentation.HistoryFragment
 import com.vbazh.words.translate.translate.presentation.TranslateFragment
 import com.vbazh.words.translate.pick.presentation.PickLanguageFragment
@@ -17,5 +18,9 @@ object Screens {
 
     object History : SupportAppScreen() {
         override fun getFragment() = HistoryFragment.newInstance()
+    }
+
+    object Favorite : SupportAppScreen() {
+        override fun getFragment() = FavoriteFragment.newInstance()
     }
 }

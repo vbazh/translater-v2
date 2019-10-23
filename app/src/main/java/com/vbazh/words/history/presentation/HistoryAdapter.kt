@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.item_history.view.*
 
 class HistoryAdapter(
     private val clickListener: (TranslateEntity) -> Unit,
-    private val deleteListener: (TranslateEntity) -> Unit
+    private val deleteListener: (TranslateEntity) -> Unit,
+    private val favoriteListener: (TranslateEntity) -> Unit
 ) :
     ListAdapter<TranslateEntity, HistoryViewHolder>(HistoryDiffCallback()) {
 
@@ -22,7 +23,7 @@ class HistoryAdapter(
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(getItem(position), clickListener, deleteListener)
+        holder.bind(getItem(position), clickListener, deleteListener, favoriteListener)
     }
 }
 
@@ -31,12 +32,32 @@ class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         translate: TranslateEntity,
         clickListener: (TranslateEntity) -> Unit,
-        deleteListener: (TranslateEntity) -> Unit
+        deleteListener: (TranslateEntity) -> Unit,
+        favoriteListener: (TranslateEntity) -> Unit
     ) {
         itemView.sourceText.text = translate.source
         itemView.targetText.text = translate.target
+
+        if (translate.isFavorite == 1) {
+            itemView.favorite.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_star_black_24dp))
+        } else {
+            itemView.favorite.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_star_border_black_24dp))
+        }
         itemView.setOnClickListener { clickListener(translate) }
         itemView.delete.setOnClickListener { deleteListener(translate) }
+        itemView.favorite.setOnClickListener {
+            favoriteListener(
+                translate.copy(isFavorite = changeIsFavorite(translate.isFavorite))
+            )
+        }
+    }
+
+    private fun changeIsFavorite(isFavorite: Int): Int {
+        return when (isFavorite) {
+            0 -> 1
+            1 -> 0
+            else -> 0
+        }
     }
 }
 
@@ -46,6 +67,6 @@ class HistoryDiffCallback : DiffUtil.ItemCallback<TranslateEntity>() {
     }
 
     override fun areContentsTheSame(oldItem: TranslateEntity, newItem: TranslateEntity): Boolean {
-        return oldItem.source == newItem.source
+        return oldItem.source == newItem.source && oldItem.isFavorite == newItem.isFavorite
     }
 }

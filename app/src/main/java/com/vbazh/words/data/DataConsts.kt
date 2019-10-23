@@ -13,6 +13,7 @@ object DataConsts {
     const val DB_TRANSLATE_SOURCE_FIELD = "db_translate_source_field"
     const val DB_TRANSLATE_TARGET_FIELD = "db_translate_target_field"
     const val DB_TRANSLATE_DIRECTION_FIELD = "db_translate_direction_field"
+    const val DB_TRANSLATE_FAVORITE_FIELD = "db_translate_favorite_field"
     const val DB_ROW_ID = "rowid"
 
     const val DB_LANGUAGE_TABLE = "db_language_table"

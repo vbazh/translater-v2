@@ -1,4 +1,4 @@
-package com.vbazh.words.history.presentation
+package com.vbazh.words.favorite.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,40 +11,41 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vbazh.words.R
 import com.vbazh.words.data.local.entity.TranslateEntity
 import com.vbazh.words.di.ComponentManager
-import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.android.synthetic.main.fragment_favorite.textSearch
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
-class HistoryFragment : MvpAppCompatFragment(), HistoryView {
+class FavoriteFragment : MvpAppCompatFragment(), FavoriteView {
 
-    private val layoutResId = R.layout.fragment_history
+    private val layoutResId = R.layout.fragment_favorite
 
     @Inject
-    lateinit var daggerPresenter: HistoryPresenter
+    lateinit var daggerPresenter: FavoritePresenter
 
     @InjectPresenter
-    lateinit var presenter: HistoryPresenter
+    lateinit var presenter: FavoritePresenter
 
-    lateinit var historyAdapter: HistoryAdapter
+    lateinit var favoriteAdapter: FavoriteAdapter
 
     @ProvidePresenter
-    fun providePresenter(): HistoryPresenter = daggerPresenter
+    fun providePresenter(): FavoritePresenter = daggerPresenter
 
     companion object {
-        fun newInstance(): HistoryFragment {
-            return HistoryFragment()
+        fun newInstance(): FavoriteFragment {
+            return FavoriteFragment()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ComponentManager.historyComponent.getInstance().inject(this)
+        ComponentManager.favoriteComponent.getInstance().inject(this)
         super.onCreate(savedInstanceState)
-        historyAdapter = HistoryAdapter(
-            clickListener = { },
-            deleteListener = { presenter.deleteTranslate(it) },
-            favoriteListener = { presenter.favoriteTranslate(it) })
+        favoriteAdapter = FavoriteAdapter(
+            clickListener = {},
+            deleteListener = { presenter.removeFromFavorite(it) }
+        )
     }
 
     override fun onCreateView(
@@ -58,16 +59,16 @@ class HistoryFragment : MvpAppCompatFragment(), HistoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        historyRecycler.apply {
-            adapter = historyAdapter
+        favoriteRecycler.apply {
+            adapter = favoriteAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
 
-        historyToolbar.setNavigationOnClickListener {
+        favoriteToolbar.setNavigationOnClickListener {
             presenter.navigateBack()
         }
 
-        textSearch.setOnEditorActionListener { v, actionId, _ ->
+        textSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 presenter.search(textSearch.text.toString())
             }
@@ -75,15 +76,20 @@ class HistoryFragment : MvpAppCompatFragment(), HistoryView {
         }
     }
 
+    override fun setItems(favorites: List<TranslateEntity>) {
+        favoriteAdapter.submitList(favorites)
+    }
+
     override fun successDelete() {
-        Toast.makeText(context, R.string.history_delete_success, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.favorite_delete_success, Toast.LENGTH_SHORT).show()
     }
 
     override fun failedDelete() {
-        Toast.makeText(context, R.string.history_delete_failed, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.favorite_delete_failed, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setItems(translate: List<TranslateEntity>) {
-        historyAdapter.submitList(translate)
+    override fun onDestroy() {
+        super.onDestroy()
+        ComponentManager.favoriteComponent.destroy()
     }
 }

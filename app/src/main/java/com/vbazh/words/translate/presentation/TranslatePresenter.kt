@@ -1,11 +1,13 @@
 package com.vbazh.words.translate.presentation
 
 import android.util.Log
+import com.vbazh.words.base.disposeIfNeed
 import com.vbazh.words.navigation.Screens
 import com.vbazh.words.translate.TranslateConsts
 import com.vbazh.words.translate.data.LangDidntPickedException
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
@@ -20,6 +22,8 @@ class TranslatePresenter @Inject constructor(
     MvpPresenter<TranslateView>() {
 
     private val compositeDisposable = CompositeDisposable()
+
+    private var translateDisposable: Disposable? = null
 
     private var cachedText = ""
 
@@ -65,24 +69,26 @@ class TranslatePresenter @Inject constructor(
 
     fun translate(text: String) {
         cachedText = text
-        if (text.isEmpty() ) {
+        if (text.isEmpty()) {
             viewState.clearTextSource()
             return
         }
 
-        compositeDisposable.add(
-            translateInteractor.translate(text)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { viewState.setTranslateResult(it.target) },
-                    {
-                        Log.d("ERROR", "error translate", it)
-                        if (it is LangDidntPickedException) {
-                            viewState.showErrorPickLanguage()
-                        }
-                    })
-        )
+        translateDisposable?.disposeIfNeed()
+
+        translateDisposable = translateInteractor.translate(text)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { viewState.setTranslateResult(it.target) },
+                {
+                    Log.d("ERROR", "error translate", it)
+                    if (it is LangDidntPickedException) {
+                        viewState.showErrorPickLanguage()
+                    }
+                })
+
+        translateDisposable?.let { compositeDisposable.add(it) }
     }
 
     fun clearTranslation() {

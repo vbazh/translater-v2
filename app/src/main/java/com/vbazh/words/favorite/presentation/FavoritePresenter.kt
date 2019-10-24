@@ -74,6 +74,8 @@ class FavoritePresenter @Inject constructor(
             .subscribe(
                 { setResult(it) },
                 { Log.d("ERROR", "error search", it) })
+
+        favoriteDisposable?.let { compositeDisposable.add(it) }
     }
 
     private fun setResult(items: List<TranslateEntity>) {

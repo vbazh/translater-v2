@@ -86,6 +86,7 @@ class HistoryPresenter @Inject constructor(
                 { setResult(it) },
                 { Log.d("ERROR", "error search", it) })
 
+        translatesDisposable?.let { compositeDisposable.add(it) }
     }
 
     private fun setResult(items: List<TranslateEntity>) {

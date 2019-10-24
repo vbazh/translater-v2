@@ -45,19 +45,7 @@ class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         itemView.setOnClickListener { clickListener(translate) }
         itemView.delete.setOnClickListener { deleteListener(translate) }
-        itemView.favorite.setOnClickListener {
-            favoriteListener(
-                translate.copy(isFavorite = changeIsFavorite(translate.isFavorite))
-            )
-        }
-    }
-
-    private fun changeIsFavorite(isFavorite: Int): Int {
-        return when (isFavorite) {
-            0 -> 1
-            1 -> 0
-            else -> 0
-        }
+        itemView.favorite.setOnClickListener { favoriteListener(translate) }
     }
 }
 

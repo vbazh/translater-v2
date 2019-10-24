@@ -1,6 +1,6 @@
 package com.vbazh.words.domain
 
-import com.vbazh.words.translate.pick.data.Language
+import com.vbazh.words.languages.data.Language
 import io.reactivex.Observable
 
 interface IDefaullLanguageChange {

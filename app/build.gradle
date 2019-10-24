@@ -38,6 +38,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -57,7 +61,7 @@ dependencies {
 
     /* Rx */
     implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
-    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rxpreferences_version"
 
     /* Moxy */
@@ -79,5 +83,6 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "junit:junit:$junit_version"
 }

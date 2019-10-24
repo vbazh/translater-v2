@@ -3,6 +3,7 @@ package com.vbazh.words.history
 import com.vbazh.words.history.presentation.HistoryFragment
 import dagger.Subcomponent
 
+@HistoryScope
 @Subcomponent(modules = [HistoryModule::class])
 interface HistoryComponent {
 

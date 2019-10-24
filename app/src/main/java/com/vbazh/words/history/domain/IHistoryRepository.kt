@@ -10,7 +10,7 @@ interface IHistoryRepository {
 
     fun delete(translateEntity: TranslateEntity): Completable
 
-    fun search(text: String): Single<List<TranslateEntity>>
+    fun search(text: String): Flowable<List<TranslateEntity>>
 
     fun favorite(entity: TranslateEntity): Completable
 }

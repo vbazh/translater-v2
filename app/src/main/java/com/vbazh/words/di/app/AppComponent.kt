@@ -6,8 +6,8 @@ import com.vbazh.words.main.MainComponent
 import com.vbazh.words.di.navigation.NavigationModule
 import com.vbazh.words.favorite.FavoriteComponent
 import com.vbazh.words.history.HistoryComponent
-import com.vbazh.words.translate.pick.PickLanguageComponent
-import com.vbazh.words.translate.translate.TranslateComponent
+import com.vbazh.words.languages.PickLanguageComponent
+import com.vbazh.words.translate.TranslateComponent
 import dagger.Component
 import javax.inject.Singleton
 

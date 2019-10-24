@@ -15,12 +15,11 @@ class FavoriteInteractorImpl @Inject constructor(
         return favoriteRepository.observeFavorite()
     }
 
-    override fun search(text: String): Single<List<TranslateEntity>> {
+    override fun search(text: String): Flowable<List<TranslateEntity>> {
         return favoriteRepository.search(text)
     }
 
-    override fun removeFromFavorite(translateEntity: TranslateEntity) : Completable {
-        return favoriteRepository.removeFromFavorite(translateEntity)
+    override fun removeFromFavorite(translateEntity: TranslateEntity): Completable {
+        return favoriteRepository.removeFromFavorite(translateEntity.copy(isFavorite = 0))
     }
-
 }

@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.vbazh.words.data.DataConsts
 import com.vbazh.words.data.local.entity.LanguageEntity
-import com.vbazh.words.translate.pick.data.Language
-import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -16,7 +14,7 @@ import io.reactivex.Single
 interface LanguageDao {
 
     @Query("SELECT * FROM ${DataConsts.DB_LANGUAGE_TABLE}")
-    fun getAll(): Flowable<List<LanguageEntity>>
+    fun getAll(): Single<List<LanguageEntity>>
 
     @Query("SELECT * FROM ${DataConsts.DB_LANGUAGE_TABLE} WHERE id = :id")
     fun getById(id: String): Observable<LanguageEntity>

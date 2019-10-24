@@ -15,7 +15,7 @@ class FavoriteRepositoryImpl @Inject constructor(private val database: AppDataba
         return database.translateDao().getFavorites()
     }
 
-    override fun search(text: String): Single<List<TranslateEntity>> {
+    override fun search(text: String): Flowable<List<TranslateEntity>> {
         return database.translateDao().findFavoriteByText(text)
     }
 

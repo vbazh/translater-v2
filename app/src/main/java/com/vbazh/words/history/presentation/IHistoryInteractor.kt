@@ -3,7 +3,6 @@ package com.vbazh.words.history.presentation
 import com.vbazh.words.data.local.entity.TranslateEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 interface IHistoryInteractor {
 
@@ -13,5 +12,5 @@ interface IHistoryInteractor {
 
     fun favorite(translateEntity: TranslateEntity): Completable
 
-    fun search(text: String) : Single<List<TranslateEntity>>
+    fun search(text: String): Flowable<List<TranslateEntity>>
 }

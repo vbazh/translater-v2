@@ -14,10 +14,12 @@ import ru.terrakok.cicerone.Router
 @Module
 class HistoryModule {
 
+    @HistoryScope
     @Provides
     fun providePresenter(translateInteractor: IHistoryInteractor, router: Router) =
         HistoryPresenter(translateInteractor, router)
 
+    @HistoryScope
     @Provides
     fun provideInteractor(
         historyRepository: IHistoryRepository
@@ -25,6 +27,7 @@ class HistoryModule {
         return HistoryInteractorImpl(historyRepository)
     }
 
+    @HistoryScope
     @Provides
     fun provideRepository(
         api: ApiService,

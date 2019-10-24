@@ -16,4 +16,12 @@ interface FavoriteView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun failedDelete()
+
+    fun showProgress()
+
+    fun hideProgress()
+
+    fun showEmptyListText()
+
+    fun hideEmptyListText()
 }

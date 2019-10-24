@@ -6,7 +6,6 @@ import com.vbazh.words.data.remote.ApiService
 import com.vbazh.words.history.domain.IHistoryRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import javax.inject.Inject
 
 class HistoryRepositoryImpl @Inject constructor(
@@ -22,7 +21,7 @@ class HistoryRepositoryImpl @Inject constructor(
         return database.translateDao().delete(translateEntity)
     }
 
-    override fun search(text: String): Single<List<TranslateEntity>> {
+    override fun search(text: String): Flowable<List<TranslateEntity>> {
         return database.translateDao().findByText(text)
     }
 

@@ -2,6 +2,7 @@ package com.vbazh.words.main
 
 import dagger.Subcomponent
 
+@MainScope
 @Subcomponent(modules = [(MainModule::class)])
 interface MainComponent {
 

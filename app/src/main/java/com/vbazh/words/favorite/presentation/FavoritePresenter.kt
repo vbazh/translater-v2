@@ -36,10 +36,11 @@ class FavoritePresenter @Inject constructor(
                 .doOnSubscribe { viewState.showProgress() }
                 .subscribe(
                     {
-                        viewState.hideProgress()
                         setResult(it)
                     },
                     { Log.d("ERROR", "error loading favorites", it) })
+
+        favoriteDisposable?.let { compositeDisposable.add(it) }
     }
 
     fun removeFromFavorite(translateEntity: TranslateEntity) {

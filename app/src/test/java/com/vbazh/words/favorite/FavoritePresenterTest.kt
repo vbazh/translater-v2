@@ -1,5 +1,7 @@
 package com.vbazh.words.favorite
 
+import com.nhaarman.mockito_kotlin.atLeastOnce
+import com.nhaarman.mockito_kotlin.inOrder
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import com.vbazh.words.data.local.entity.TranslateEntity
@@ -20,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import ru.terrakok.cicerone.Router
 
 @RunWith(MockitoJUnitRunner::class)
-class HistoryPresenterTest {
+class FavoritePresenterTest {
 
     @Mock
     lateinit var view: FavoriteView
@@ -42,6 +44,13 @@ class HistoryPresenterTest {
         target = "some text translated",
         direction = "en-ru",
         isFavorite = 1
+    )
+
+    private val translateSearchEntityNormal = TranslateEntity(
+        source = textSearch,
+        target = "some text translated",
+        direction = "en-ru",
+        isFavorite = 0
     )
 
     @Before
@@ -89,12 +98,21 @@ class HistoryPresenterTest {
 
     @Test
     fun `success search`() {
-        whenever(interactor.search(textSearch)).thenReturn(Flowable.just(listOf(translateEntityNormal)))
+        whenever(interactor.search(textSearch)).thenReturn(Flowable.just(listOf(translateSearchEntityNormal)))
         presenter.attachView(view)
 
         presenter.search(textSearch)
-        verify(view).hideEmptyListText()
-        verify(view).setItems(listOf(translateEntityNormal))
+
+        inOrder(view) {
+            verify(view).showProgress()
+            verify(view).hideProgress()
+            verify(view).hideEmptyListText()
+            verify(view).setItems(listOf(translateEntityNormal))
+            verify(view).showProgress()
+            verify(view).hideProgress()
+            verify(view).hideEmptyListText()
+            verify(view).setItems(listOf(translateSearchEntityNormal))
+        }
     }
 
     @Test
